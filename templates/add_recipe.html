@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AyurAahar - Add Recipe</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Nunito', sans-serif; }
+    .brand { font-family: 'Lobster', cursive; }
+  </style>
+</head>
+<body class="bg-[#FFEBCD] min-h-screen flex justify-center">
+
+  <div class="w-full max-w-md md:max-w-lg mx-auto px-4 py-4 pb-24">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-4">
+      <a href="{% url 'home' %}" class="text-[#964B00]">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </a>
+      <span class="brand text-xl md:text-2xl text-[#964B00]"> AyurAahar</span>
+      <span class="text-xs text-[#964B00] font-semibold"> </span>
+    </div> 
+ <form method="post" enctype="multipart/form-data" class="bg-white rounded-2xl shadow px-5 py-6 md:px-7 md:py-7">
+  {% csrf_token %}
+
+  <div class="mb-4">
+    <label class="block text-m font-semibold text-[#964B00] mb-1">
+    {{ form.recipe_name.label_tag }}
+  </label>
+    {{ form.recipe_name }}
+  </div>
+
+  <div class="mb-4">
+        <label class="block text-m font-semibold text-[#964B00] mb-1">
+    {{ form.category_name.label_tag }}
+        </label>
+    {{ form.category_name }}
+  </div>
+
+  <div class="mb-4">
+        <label class="block text-m font-semibold text-[#964B00] mb-1">
+    {{ form.ingredients.label_tag }}
+        </label>
+    {{ form.ingredients }}
+  </div>
+
+  <div class="mb-4">
+    <label class="block text-m font-semibold text-[#964B00] mb-1">
+    {{ form.methods.label_tag }}
+    </label>
+    {{ form.methods }}
+  </div>
+
+  <div class="mb-4">
+    <label class="block text-m font-semibold text-[#964B00] mb-1">
+    {{ form.extra_tips.label_tag }}
+    </label>
+    {{ form.extra_tips }}
+  </div>
+
+  <div class="mb-5">
+        <label class="block text-m font-semibold text-[#964B00] mb-1">
+    {{ form.image.label_tag }}
+        </label>
+    {{ form.image }}
+    <p class="mt-1 text-[11px] text-gray-500">Upload a clear photo of the final dish.</p>
+  </div>
+
+  <div class="flex justify-end gap-3">
+    <a href="{% url 'home' %}" class="px-4 py-2 rounded-xl border border-[#FF9933] text-[#964B00] text-sm font-semibold hover:bg-[#FFEBCD] transition">
+      Cancel
+    </a>
+    <button type="submit" class="px-5 py-2 rounded-xl bg-[#FF9933] text-white text-sm font-semibold hover:bg-[#964B00] transition">
+      Save recipe
+    </button>
+  </div>
+</form>
+  
+</body>
+</html>
+
+{% comment %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AyurAahar - Add Recipe</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    .brand { font-family: 'Lobster', cursive; }
+    body { font-family: 'Nunito', sans-serif; }
+  </style>
+</head>
+
+<body class="bg-[#FFEBCD] min-h-screen flex flex-col">
+
+  <!-- Top bar -->
+  <div class="flex items-center justify-between px-4 py-4 bg-[#FFEBCD] sticky top-0 z-10 shadow-sm">
+    <a href="{% url 'profile_view' %}" class="text-[#964B00] hover:text-[#FF9933] transition">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+    </a>
+    <span class="brand text-2xl font-bold text-[#964B00]">AyurAahar</span>
+    <span class="w-6 h-6"></span>
+  </div>
+
+  <!-- Page heading -->
+  <div class="px-4 py-4">
+    <h1 class="text-2xl font-bold text-[#964B00]">Add New Recipe</h1>
+    <p class="text-sm text-gray-600 mt-1">Share your delicious Ayurvedic recipe with the community</p>
+  </div>
+
+  <!-- Form Container -->
+  <div class="flex-1 overflow-y-auto px-4 pb-6">
+    <div class="bg-white rounded-2xl shadow-lg p-6 max-w-3xl mx-auto">
+      <form method="POST" enctype="multipart/form-data" class="space-y-5">
+        {% csrf_token %}
+
+        <!-- Recipe Name -->
+        <div>
+          <label for="{{ form.recipe_name.id_for_label }}" class="block text-sm font-semibold text-[#964B00] mb-2">
+            {{ form.recipe_name.label }}
+            <span class="text-red-500">*</span>
+          </label>
+          {{ form.recipe_name }}
+          {% if form.recipe_name.errors %}
+            <p class="text-red-500 text-xs mt-1">{{ form.recipe_name.errors.0 }}</p>
+          {% endif %}
+        </div>
+
+        <!-- Category -->
+        <div>
+          <label for="{{ form.category_name.id_for_label }}" class="block text-sm font-semibold text-[#964B00] mb-2">
+            {{ form.category_name.label }}
+            <span class="text-red-500">*</span>
+          </label>
+          {{ form.category_name }}
+          {% if form.category_name.errors %}
+            <p class="text-red-500 text-xs mt-1">{{ form.category_name.errors.0 }}</p>
+          {% endif %}
+        </div>
+
+        <!-- Image Upload -->
+        <div>
+          <label for="{{ form.image.id_for_label }}" class="block text-sm font-semibold text-[#964B00] mb-2">
+            {{ form.image.label }}
+            <span class="text-red-500">*</span>
+          </label>
+          <div class="border-2 border-dashed border-[#FF9933] rounded-xl p-6 bg-[#FFEBCD] hover:bg-orange-50 transition text-center">
+            {{ form.image }}
+          </div>
+          {% if form.image.errors %}
+            <p class="text-red-500 text-xs mt-1">{{ form.image.errors.0 }}</p>
+          {% endif %}
+          <p class="text-xs text-gray-500 mt-2">📸 Upload a clear image of your dish (JPG, PNG, max 5MB)</p>
+        </div>
+
+        <!-- Ingredients -->
+        <div>
+          <label for="{{ form.ingredients.id_for_label }}" class="block text-sm font-semibold text-[#964B00] mb-2">
+            {{ form.ingredients.label }}
+            <span class="text-red-500">*</span>
+          </label>
+          {{ form.ingredients }}
+          {% if form.ingredients.errors %}
+            <p class="text-red-500 text-xs mt-1">{{ form.ingredients.errors.0 }}</p>
+          {% endif %}
+          <p class="text-xs text-gray-500 mt-2">💡 List each ingredient with quantity on a new line</p>
+        </div>
+
+        <!-- Cooking Methods -->
+        <div>
+          <label for="{{ form.methods.id_for_label }}" class="block text-sm font-semibold text-[#964B00] mb-2">
+            {{ form.methods.label }}
+            <span class="text-red-500">*</span>
+          </label>
+          {{ form.methods }}
+          {% if form.methods.errors %}
+            <p class="text-red-500 text-xs mt-1">{{ form.methods.errors.0 }}</p>
+          {% endif %}
+          <p class="text-xs text-gray-500 mt-2">📝 Write step-by-step cooking instructions</p>
+        </div>
+
+        <!-- Extra Tips -->
+        <div>
+          <label for="{{ form.extra_tips.id_for_label }}" class="block text-sm font-semibold text-[#964B00] mb-2">
+            {{ form.extra_tips.label }}
+          </label>
+          {{ form.extra_tips }}
+          {% if form.extra_tips.errors %}
+            <p class="text-red-500 text-xs mt-1">{{ form.extra_tips.errors.0 }}</p>
+          {% endif %}
+          <p class="text-xs text-gray-500 mt-2">✨ Share Ayurvedic benefits, serving suggestions, or variations</p>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="pt-4">
+          <button type="submit" 
+            class="w-full py-3 bg-[#FF9933] text-white font-bold text-lg rounded-xl hover:bg-[#964B00] transition shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+            🍽️ Add Recipe
+          </button>
+        </div>
+
+        <!-- Form Errors -->
+        {% if form.non_field_errors %}
+          <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded">
+            <p class="text-red-700 text-sm">{{ form.non_field_errors.0 }}</p>
+          </div>
+        {% endif %}
+      </form>
+    </div>
+  </div>
+
+</body>
+</html> {% endcomment %}

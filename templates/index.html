@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title> AyurAahar - Login / Signup</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Lobster for logo, Nunito for body -->
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Nunito', sans-serif; }
+    .brand { font-family: 'Lobster', cursive; }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-[#FFF4E1] to-[#FFEBCD] flex items-center justify-center min-h-screen">
+  <div class="bg-white rounded-xl shadow-lg w-full max-w-md mx-2 my-6">
+    <!-- Header with two icons and minimal palette -->
+    <div class="bg-[#FF9933] rounded-t-xl p-6 relative overflow-hidden">
+      <span class="brand text-white font-bold text-2xl mb-1 block tracking-wide"> AyurAahar</span>
+      <h1 class="text-[#FFEBCD] font-bold text-lg md:text-xl mb-1 leading-snug"> Wholesome Indian recipes, crafted for healthy living</h1>
+
+      <!-- Icon: Basket -->
+      <!-- <svg class="absolute left-3 top-3 w-10 h-10 opacity-20" fill="none" stroke="#FFEBCD" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 13h8M8 15h8"/></svg> -->
+      <!-- Icon: Millet/Jowar grain -->
+      <!-- <svg class="absolute right-6 bottom-6 w-12 h-12 opacity-10" fill="none" stroke="#964B00" stroke-width="2" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="6" ry="10"/><circle cx="12" cy="7" r="2"/></svg> -->
+      
+      <!-- Icon: Cooking Pot -->
+<!-- <svg class="absolute left-16 top-3 w-10 h-10 opacity-20" fill="none" stroke="#FFEBCD" stroke-width="2" viewBox="0 0 24 24"> <rect x="4" y="8" width="16" height="10" rx="2"/> <path d="M4 8h16M8 4h8"/></svg>
+
+Icon: Leaf
+<svg class="absolute right-16 top-3 w-10 h-10 opacity-20" fill="none" stroke="#964B00" stroke-width="2" viewBox="0 0 24 24"> <path d="M12 2C8 6 6 10 6 14c0 4 2 8 6 8s6-4 6-8c0-4-2-8-6-12z"/></svg>
+
+Icon: Mortar & Pestle
+<svg class="absolute left-1/2 bottom-6 w-12 h-12 opacity-10" fill="none" stroke="#964B00" stroke-width="2" viewBox="0 0 24 24"><path d="M4 15h16v2a4 4 0 01-4 4H8a4 4 0 01-4-4v-2z"/><path d="M9 9l6-6"/></svg> -->
+
+<!-- Icon: Leaf (Top-Right) -->
+<svg class="absolute right-3 top-3 w-10 h-10 opacity-20" fill="none" stroke="#964B00" stroke-width="2" viewBox="0 0 24 24">
+  <path d="M12 2C8 6 6 10 6 14c0 4 2 8 6 8s6-4 6-8c0-4-2-8-6-12z"/>
+</svg>
+
+<!-- Icon: Cooking Pot (Bottom-Left) -->
+<svg class="absolute left-6 bottom-6 w-12 h-12 opacity-10" fill="none" stroke="#FFEBCD" stroke-width="2" viewBox="0 0 24 24">
+  <rect x="4" y="8" width="16" height="10" rx="2"/>
+  <path d="M4 8h16M8 4h8"/>
+</svg>
+
+    </div>
+    <div class="p-6">
+    
+      <!-- Signup Form: hidden by default -->
+      <form id="signupForm"  method="POST">
+        <div class="mb-4">
+           {%csrf_token%}
+
+    {% if messages %}
+<div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg" role="alert">
+  {% for message in messages %}
+  <span class="font-medium"> {{ message }} </span>  
+   {% endfor %}
+   </div>  
+<ul class="messages">
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}> </li>
+</ul>
+ {% endif %}
+
+          <label for="usernameSignup" class="block mb-2 text-sm text-[#964B00] font-medium">Username</label>
+          <input type="text" id="usernameSignup" name="usernameSignup" placeholder="Enter your username" required 
+                 class="w-full p-3 rounded-xl bg-[#FFEBCD] border border-[#FF9933] focus:outline-none focus:ring-2 focus:ring-[#964B00]"/>
+        </div>
+        {% comment %} <div class="mb-4">
+          <label for="genderSignup" class="block mb-2 text-sm text-[#964B00] font-medium">Gender</label>
+          <select id="genderSignup" name="genderSignup" required
+            class="w-full p-3 rounded-xl bg-[#FFEBCD] border border-[#FF9933] focus:outline-none focus:ring-2 focus:ring-[#964B00]">
+            <option value="" disabled selected>Select gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+        </div> {% endcomment %}
+        <div class="mb-4">
+          <label for="emailSignup" class="block mb-2 text-sm text-[#964B00] font-medium">Email</label>
+          <input type="email" id="emailSignup" name="emailSignup" placeholder="Enter your email" required 
+                 class="w-full p-3 rounded-xl bg-[#FFEBCD] border border-[#FF9933] focus:outline-none focus:ring-2 focus:ring-[#964B00]"/>
+        </div>
+        <div class="mb-4">
+          <label for="passwordSignup" class="block mb-2 text-sm text-[#964B00] font-medium">Password</label>
+          <input type="password" id="passwordSignup" name="passwordSignup" placeholder="Create your password" required
+                 class="w-full p-3 rounded-xl bg-[#FFEBCD] border border-[#FF9933] focus:outline-none focus:ring-2 focus:ring-[#964B00]"/>
+        </div>
+        <div class="mb-6">
+          <label for="confirmPasswordSignup" class="block mb-2 text-sm text-[#964B00] font-medium">Confirm Password</label>
+          <input type="password" id="confirmPasswordSignup" name="confirmPasswordSignup" placeholder="Confirm your password" required
+                 class="w-full p-3 rounded-xl bg-[#FFEBCD] border border-[#FF9933] focus:outline-none focus:ring-2 focus:ring-[#964B00]"/>
+        </div>
+        <button type="submit"  name="signup"
+          class="w-full py-3 rounded-xl text-white font-semibold bg-[#FF9933] hover:bg-[#964B00] transition">Sign Up</button>
+      </form>
+      <!-- Toggle login/signup -->
+      <div class="text-center mt-8 text-[#964B00] font-semibold cursor-pointer" id="toggleForm">
+        <a href="{%url 'login_page'%}">
+        Already have account ? Sign Up
+        </a>
+      </div>
+    </div>
+    </div>
+  {% comment %}  
+  <script>
+    const loginForm = document.getElementById("loginForm");
+    const signupForm = document.getElementById("signupForm");
+    const toggleFormBtn = document.getElementById("toggleForm");
+    const forgotPasswordBtn = document.getElementById("forgotPassword");
+    toggleFormBtn.addEventListener("click", () => {
+      if (loginForm.classList.contains("hidden")) {
+        loginForm.classList.remove("hidden");
+        signupForm.classList.add("hidden");
+        toggleFormBtn.textContent = "Create an account";
+      } else {
+        loginForm.classList.add("hidden");
+        signupForm.classList.remove("hidden");
+        toggleFormBtn.textContent = "Already have an account? Log in";
+      }
+    });
+    forgotPasswordBtn.addEventListener("click", () => {
+      alert("Password recovery feature coming soon.");
+    });
+  </script> {% endcomment %}
+</body>
+</html>

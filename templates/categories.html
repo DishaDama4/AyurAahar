@@ -1,0 +1,72 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AyurAahar - Categories</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  {% comment %} for icons  {% endcomment %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Nunito:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Nunito', sans-serif; }
+    .brand { font-family: 'Lobster', cursive; }
+  </style>
+</head>
+<body class="bg-[#FFEBCD] min-h-screen flex flex-col items-center px-4 py-8">
+
+  <header class="mb-8 w-full max-w-md text-center">
+    <span class="brand text-[#964B00] text-3xl font-bold"> AyurAahar</span>
+    <h1 class="mt-2 text-[#964B00] font-semibold text-xl">Explore Categories</h1>
+  </header> 
+
+  {% comment %} Categories section {% endcomment %}
+   <section class="mt-10 mb-20 px-6 md:px-16">
+
+  <div class="flex flex-wrap justify-start gap-4">
+    {% for category in categories %}
+      <a href="{% url 'category_recipes' category.id %}" 
+         class="category-card text-center p-4 rounded-lg bg-white shadow  hover:shadow-lg transition transform hover:scale-105 w-[calc(50%-0.5rem)]">
+         
+         <i class="fa-solid {{ category.icon }} fa-3x mx-auto mb-2 text-[#FF9933]"></i>
+         
+         <p class="text-sm font-medium text-[#964B00]">{{ category.category_name }}</p>
+      </a>
+    {% endfor %}
+  </div>
+</section>
+  <!-- Bottom Navigation Bar (sticky) -->
+  <nav class="fixed  bottom-0 left-0 right-0 bg-white border-t border-[#FF9933] z-50">
+    <div class="max-w-md mx-auto flex justify-between items-center py-2 px-6">
+      <!-- Home Icon -->
+      <a href="{%url 'home' %}" class="flex flex-col items-center text-[#964B00]">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path d="M3 12L12 3l9 9M4 10v10h16V10"/>
+        </svg>
+        <span class="text-xs">Home</span>
+      </button>
+      <!-- Categories Icon -->
+      <a href="{%url 'categories'%}" class="flex flex-col items-center text-[#964B00]">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/>
+        </svg>
+        <span class="text-xs">Categories</span>
+    </a>
+      <!-- Liked Icon -->
+      <a href="{%url 'liked_recipes' %}" class="flex flex-col items-center text-[#964B00]">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path d="M12 21C12 21 4 13.36 4 8.5a4.5 4.5 0 018.5-2.5A4.5 4.5 0 0120 8.5C20 13.36 12 21 12 21z"/>
+        </svg>
+        <span class="text-xs">Liked</span>
+      </a>
+      <!-- Profile Icon -->
+      <a href="{%url 'profile_view' %}" class="flex flex-col items-center text-[#964B00]">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <circle cx="12" cy="8" r="4"/><path d="M6 20c0-3.314 2.686-6 6-6s6 2.686 6 6"/>
+        </svg>
+        <span class="text-xs">Profile</span>
+      </a>
+    </div>
+  </nav>
+</body>
+</html>

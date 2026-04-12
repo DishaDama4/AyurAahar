@@ -1,0 +1,223 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AyurAahar - Profile</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Nunito', sans-serif; }
+    .brand { font-family: 'Lobster', cursive; }
+  </style>
+</head> 
+<body class="bg-[#FFEBCD] min-h-screen flex flex-col items-center">
+  {% comment %} To get items from static folder  {% endcomment %}
+  {% load static %}
+
+<!-- Edit Profile Modal by default hidden -->
+<div id="editProfileModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center"> 
+  <!-- Modal box --> 
+<div class="bg-white rounded-2xl shadow-lg w-full max-w-md p-6 relative max-h-[90vh] overflow-y-auto">
+    <!-- Close button -->
+<button id="closeModal" class="absolute top-3 right-3 text-[#964B00] font-bold text-xl">&times;</button>  
+
+<h2 class="text-[#964B00] text-xl font-semibold mb-4">Edit Profile</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      
+      <div class="mb-4">
+        <label for="username" class="block text-sm text-[#964B00] font-medium mb-1">Username</label>
+        <input type="text" id="username" name="username" value="{{user.username}}"
+               class="w-full p-3 rounded-xl bg-[#FFEBCD] border border-[#FF9933] focus:outline-none focus:ring-2 focus:ring-[#964B00]"/>
+      </div>
+      
+      <div class="mb-4">
+        <label for="email" class="block text-sm text-[#964B00] font-medium mb-1">Email</label>
+        <input type="email" id="email" name="email" value="{{user.email}}"
+               class="w-full p-3 rounded-xl bg-[#FFEBCD] border border-[#FF9933] focus:outline-none focus:ring-2 focus:ring-[#964B00]"/>
+      </div>
+        
+      <div class="mb-4">
+        <label for="image" class="block text-sm text-[#964B00] font-medium mb-1">Profile Image</label>
+        <input type="file" id="image" name="image"
+               class="w-full p-3 rounded-xl bg-[#FFEBCD] border border-[#FF9933] focus:outline-none focus:ring-2 focus:ring-[#964B00]"/>
+        
+        <!-- Show current image if available -->
+        {% if profile.image %}
+          <p class="text-sm text-gray-500 mt-2">Current image:</p>
+          <img src="{{ profile.image.url }}" alt="User Image" class="mt-2 w-20 h-20 rounded-full object-cover border-2 border-[#FF9933]">
+        {% else %}
+          <p class="text-sm text-gray-500 mt-2">No image uploaded. Default will be used.</p>
+          <img src="{% static 'images/default_user.jpg' %}" alt="Default User" class="mt-2 w-20 h-20 rounded-full object-cover border-2 border-[#FF9933]">
+        {% endif %}
+      </div>
+
+      <button type="submit"
+              class="w-full py-3 rounded-xl text-white font-semibold bg-[#FF9933] hover:bg-[#964B00] transition">
+        Save Changes
+      </button>
+    </form>
+  </div>
+</div>
+
+ <!--Main content -->
+  <div class="w-full max-w-md md:max-w-lg lg:max-w-xl mx-auto px-4 py-6 pb-24">
+    <!-- Top bar -->
+    <div class="flex items-center justify-between mb-6">
+      <!-- Back icon -->
+      <a href="{%url 'home'%}" class="text-[#964B00] hover:text-[#FF9933] transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </a>
+      <!-- Logo text -->
+      <span class="brand text-[#964B00] text-2xl md:text-3xl font-bold">AyurAahar</span>
+      <!-- Edit icon -->
+      <button class="text-[#964B00] hover:text-[#FF9933] transition" id="editBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15.232 5.232l3.536 3.536M4 20h4.5L19 9.5 14.5 5 4 15.5V20z" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Profile card -->
+    <div class="bg-white rounded-2xl shadow-lg px-6 py-8 md:px-8 md:py-10 mb-6">
+      <!-- Avatar -->
+      <div class="flex justify-center mb-6">
+        <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gray-300 overflow-hidden border-4 border-[#FF9933]">
+          {% if profile.image %}
+            <!-- Show uploaded profile image -->
+            <img src="{{ profile.image.url }}" alt="User" class="w-full h-full object-cover">
+          {% else %}
+            <!-- Show default image if none uploaded -->
+            <img src="{% static 'images/default_user.jpg' %}" alt="Default User" class="w-full h-full object-cover">
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Text info -->
+      <div class="space-y-4 text-sm md:text-base mb-6">
+        <div class="bg-[#FFEBCD] rounded-xl p-3 border border-[#FF9933]">
+          <p class="text-xs text-gray-500 mb-1">Username</p>
+          <p class="font-semibold text-[#964B00]">{{ user.username }}</p>
+        </div>
+        <div class="bg-[#FFEBCD] rounded-xl p-3 border border-[#FF9933]">
+          <p class="text-xs text-gray-500 mb-1">Email</p>
+          <p class="font-semibold text-[#964B00] break-all">{{user.email}}</p>
+        </div>
+      </div>
+
+
+ <!-- Stats -->
+<div class="flex justify-between gap-3 mb-5">
+  <!-- Recipes -->
+  <a href="{% url 'manage_recipes' %}" class="flex-1">
+    <div class="bg-[#FFEBCD] rounded-xl border-2 border-[#FF9933] py-4 text-center">
+      <p class="text-lg md:text-xl font-bold text-[#964B00]">{{ recipe_count }}</p>
+      <p class="text-xs md:text-sm text-gray-600 mt-1">Recipes Added</p>
+    </div>
+  </a>
+
+  <!-- Liked -->
+  <a href="{% url 'liked_recipes' %}" class="flex-1">
+    <div class="bg-[#FFEBCD] rounded-xl border-2 border-[#FF9933] py-4 text-center">
+      <p class="text-lg md:text-xl font-bold text-[#964B00]">{{ liked_count }}</p>
+      <p class="text-xs md:text-sm text-gray-600 mt-1">Liked</p>
+    </div>
+  </a>
+
+  <!-- Shared -->
+  <a href="{% url 'shared_recipes' %}" class="flex-1">
+    <div class="bg-[#FFEBCD] rounded-xl border-2 border-[#FF9933] py-4 text-center">
+      <p class="text-lg md:text-xl font-bold text-[#964B00]">{{ shared_count }}</p>
+      <p class="text-xs md:text-sm text-gray-600 mt-1">Shared</p>
+    </div>
+  </a>
+
+  <!-- Downloaded -->
+  <a href="{% url 'downloaded_recipes' %}" class="flex-1">
+    <div class="bg-[#FFEBCD] rounded-xl border-2 border-[#FF9933] py-4 text-center">
+      <p class="text-lg md:text-xl font-bold text-[#964B00]">{{ downloaded_count }}</p>
+      <p class="text-xs md:text-sm text-gray-600 mt-1">Downloaded</p>
+    </div>
+  </a>
+</div>
+
+
+
+    <!-- Action Buttons -->
+    <div class="space-y-3">
+      <!-- Add Recipe button -->
+      <a href="{% url 'add_recipe' %}" 
+         class="block w-full text-center py-3 rounded-xl bg-[#FF9933] text-white font-semibold shadow-md hover:bg-[#964B00] hover:shadow-lg transition transform hover:scale-105">
+        <i class="fas fa-plus mr-2"></i>Add Recipe
+      </a>
+
+      <!-- Logout button -->
+      <a href="{% url 'logout' %}" 
+         class="block w-full text-center py-3 rounded-xl bg-white border-2 border-[#964B00] text-[#964B00] font-semibold shadow-md hover:bg-[#964B00] hover:text-white transition transform hover:scale-105">
+        <i class="fas fa-sign-out-alt mr-2"></i>Logout
+      </a>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation Bar (sticky) -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-[#FF9933] shadow-lg z-50">
+    <div class="max-w-md mx-auto flex justify-between items-center py-2 px-6">
+      <!-- Home Icon -->
+      <a href="{% url 'home' %}" class="flex flex-col items-center text-[#964B00] hover:text-[#FF9933] transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path d="M3 12L12 3l9 9M4 10v10h16V10"/>
+        </svg>
+        <span class="text-xs">Home</span>
+      </a>
+      <!-- Categories Icon -->
+      <a href="{% url 'categories'%}" class="flex flex-col items-center text-[#964B00] hover:text-[#FF9933] transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/>
+        </svg>
+        <span class="text-xs">Categories</span>
+      </a>
+      <!-- Liked Icon -->
+      <a href="{% url 'liked_recipes' %}" class="flex flex-col items-center text-[#964B00] hover:text-[#FF9933] transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path d="M12 21C12 21 4 13.36 4 8.5a4.5 4.5 0 018.5-2.5A4.5 4.5 0 0120 8.5C20 13.36 12 21 12 21z"/>
+        </svg>
+        <span class="text-xs">Liked</span>
+      </a>
+      <!-- Profile Icon -->
+      <a href="{%url 'profile_view' %}" class="flex flex-col items-center text-[#FF9933] transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <circle cx="12" cy="8" r="4"/><path d="M6 20c0-3.314 2.686-6 6-6s6 2.686 6 6"/>
+        </svg>
+        <span class="text-xs font-semibold">Profile</span>
+      </a>
+    </div>
+  </nav>
+
+  <script>
+    // Modal functionality
+    const editBtn = document.getElementById('editBtn');
+    const modal = document.getElementById('editProfileModal');
+    const closeModal = document.getElementById('closeModal');
+
+    editBtn.addEventListener('click', () => {
+      modal.classList.remove('hidden');
+    });
+
+    closeModal.addEventListener('click', () => {
+      modal.classList.add('hidden');
+    }); 
+
+    // Close modal when clicking outside
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.add('hidden');
+      }
+    });
+  </script>
+</body>
+</html>

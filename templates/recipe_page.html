@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+{%load static%}
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AyurAahar - Recipe</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Nunito', sans-serif; }
+    .brand { font-family: 'Lobster', cursive; }
+  </style>
+</head>
+
+<body class="bg-[#FFEBCD] min-h-screen flex justify-center">
+
+  <div class="w-full max-w-md md:max-w-2xl mx-auto px-4 py-4">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-4">
+      <a href="{% url 'home' %}" aria-label="Back to Home" class="text-[#964B00] hover:text-[#FF9933] transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 md:w-7 md:h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </a>
+      <span class="brand text-xl md:text-2xl text-[#964B00]">AyurAahar</span>
+      <span class="w-6 h-6 md:w-7 md:h-7"></span>
+    </div>
+
+    <!-- Recipe Card -->
+    <div class="bg-white rounded-2xl shadow px-4 py-5 md:px-6 md:py-6 flex flex-col gap-4">
+      
+      <!-- User Info -->
+      <div class="flex items-center gap-3">
+         {% if  profile.image %}
+          <img src="{{ profile.image.url }}" 
+         alt="{{ recipe.user.username }}"
+            class="w-10 h-10 rounded-full border-2 border-[#FF9933] object-cover">
+           {% else %} 
+           <img src="{% static 'images/default_user.jpg' %}"
+            alt="Default avatar"
+             class="w-10 h-10 rounded-full border-2 border-[#FF9933] object-cover">
+             {%endif%}
+        <div>
+          <p class="font-semibold text-[#964B00]">{{ recipe.user.username }}</p>
+          <p class="text-xs text-gray-500">Shared this recipe</p>
+        </div>
+      </div>
+
+
+
+      <!-- Recipe Image -->
+      {% comment %} <div class="w-full h-52 md:h-72 rounded-2xl overflow-hidden border border-[#FF9933] bg-gray-100">
+        <img src="{{ recipe.image.url }}" alt="{{ recipe.recipe_name }}" class="w-full h-full object-cover">
+      </div> {% endcomment %}
+
+      <div class="w-full rounded-2xl overflow-hidden border border-[#FF9933] bg-gray-100">
+  <img src="{{ recipe.image.url }}" alt="{{ recipe.recipe_name }}" class="w-full object-contain">
+</div>
+
+      <!-- Recipe Info -->
+      <div>
+        <h1 class="text-lg md:text-xl font-semibold text-[#964B00]">{{ recipe.recipe_name }}</h1>
+        <p class="text-xs md:text-sm text-gray-600 mt-1">Category: {{ recipe.category_name }}</p>
+      </div>
+
+      <!-- Ingredients -->
+      <div>
+        <h2 class="text-sm md:text-base font-semibold text-[#964B00] mb-1">Ingredients :</h2>
+        <p class="whitespace-pre-line text-xs md:text-sm text-gray-800">{{ recipe.ingredients }}</p>
+      </div>
+
+      <!-- Methods -->
+      <div>
+        <h2 class="text-sm md:text-base font-semibold text-[#964B00] mb-1">Methods :</h2>
+        <p class="whitespace-pre-line text-xs md:text-sm text-gray-800">{{ recipe.methods }}</p>
+      </div>
+
+      <!-- Extra Tips -->
+      {% if recipe.extra_tips %}
+      <div>
+        <h2 class="text-sm md:text-base font-semibold text-[#964B00] mb-1">Extra Tips :</h2>
+        <p class="whitespace-pre-line text-xs md:text-sm text-gray-800">{{ recipe.extra_tips }}</p>
+      </div>
+      {% endif %}
+
+
+      <!-- Comment Modal -->
+<div id="commentModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center">
+  <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-4 relative">
+    <!-- Close button -->
+    <button onclick="closeCommentModal()" class="absolute top-2 right-2 text-gray-500 hover:text-red-500">
+      ✖
+    </button>
+
+    <h2 class="text-lg font-semibold text-[#964B00] mb-3">Comments</h2>
+
+    <!-- Existing comments -->
+    <div class="space-y-3 max-h-60 overflow-y-auto mb-3"> {% for comment in comments %}
+<div class="flex items-start gap-2">
+  <!-- Profile image -->
+  {% if comment.user.profile.image %}
+    <img src="{{ comment.user.profile.image.url }}" class="w-8 h-8 rounded-full border border-[#FF9933]">
+  {% else %}
+    <img src="{% static 'images/default_user.jpg' %}" class="w-8 h-8 rounded-full border border-[#FF9933]">
+  {% endif %}
+
+  <!-- Comment content -->
+  <div>
+    <p class="text-sm font-semibold text-[#964B00]">{{ comment.user.username }}</p>
+    <p class="text-xs text-gray-700" id="comment-text-{{ comment.id }}">{{ comment.comment_txt }}</p>
+    <p class="text-[10px] text-gray-400">{{ comment.created_at|date:"M d, Y H:i" }}</p>
+
+    {% if comment.user == request.user %}
+      <div class="flex gap-2 mt-1">
+        <!-- Edit button -->
+        <button onclick="toggleEditForm({{ comment.id }})" 
+                class="text-xs text-blue-600 hover:underline">Edit</button>
+
+        <!-- Delete button -->
+        <a href="{% url 'delete_comment' comment.id %}" 
+           class="text-xs text-red-600 hover:underline"
+           onclick="return confirm('Delete this comment?');">Delete</a>
+      </div>
+
+      <!-- Hidden edit form -->
+      <form id="edit-form-{{ comment.id }}" 
+            method="POST" 
+            action="{% url 'edit_comment' comment.id %}" 
+            class="hidden mt-2">
+        {% csrf_token %}
+        <textarea name="comment_txt" rows="2" class="w-full border rounded px-2 py-1 text-sm">{{ comment.comment_txt }}</textarea>
+        <button type="submit" class="mt-1 bg-[#FF9933] text-white px-2 py-1 rounded text-xs">Update</button>
+        <button type="button" onclick="toggleEditForm({{ comment.id }})" class="mt-1 text-xs text-gray-500">Cancel</button>
+      </form>
+    {% endif %}
+  </div>
+</div>
+{% endfor %}
+
+    </div>
+
+    <!-- Add new comment -->
+    <form method="POST" action="{% url 'add_comment' recipe.id %}" class="flex gap-2">
+      {% csrf_token %}
+      <input type="text" name="comment_txt" placeholder="Add a comment..." 
+             class="flex-1 border rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9933]">
+      <button type="submit" class="bg-[#FF9933] text-white px-3 py-1 rounded">Post</button>
+    </form>
+  </div>
+</div>
+
+
+      <!-- Action Buttons -->
+      <div class="pt-3  flex justify-around border-t border-[#FF9933] mt-2 mb-10">
+        <!-- Like --> 
+         <button onclick="toggleHeart(this, {{ recipe.id }})" class="flex flex-col items-center text-[#964B00] ">
+  <i class="heartIcon {% if recipe.is_liked %}fa-solid fa-heart text-red-500{% else %}fa-regular fa-heart text-[#964B00] {% endif %} text-xl"></i>
+
+  <span class="text-xs md:text-sm">Like</span>
+</button>
+        <!-- Comment -->
+        <button id="commentBtn" class="flex flex-col items-center text-[#964B00]">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M8 10h8M8 14h5m-9 5l2-2h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12z" />
+          </svg>
+          <span class="text-xs md:text-sm">Comment</span>
+        </button>
+ <!-- Share -->
+<button id="shareBtn" onclick="shareRecipe({{ recipe.id }})" class="flex flex-col items-center text-[#964B00]">
+  <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7M16 6l-4-4m0 0L8 6m4-4v14" />
+  </svg>
+  <span class="text-xs md:text-sm">Share</span>
+</button>
+
+ <!-- Download -->
+<a href="{% url 'download_recipe' recipe.id %}" class="flex flex-col items-center text-[#964B00]">
+  <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
+  </svg>
+  <span class="text-xs md:text-sm">Download</span>
+</a>
+
+      </div>
+    </div>
+  </div> 
+  
+
+
+
+   <!-- Bottom Navigation Bar (sticky) -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-[#FF9933] z-50">
+    <div class="max-w-md mx-auto flex justify-between items-center py-2 px-6">
+      <!-- Home Icon -->
+      <a href="{% url 'home' %}" class="flex flex-col items-center text-[#964B00]">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path d="M3 12L12 3l9 9M4 10v10h16V10"/>
+        </svg>
+        <span class="text-xs">Home</span>
+    </a>
+      <!-- Categories Icon -->
+      <a href="{% url 'categories'%}" class="flex flex-col items-center text-[#964B00]">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/>
+        </svg>
+        <span class="text-xs">Categories</span>
+    </a>
+      <!-- Liked Icon -->
+      <a href="{% url 'liked_recipes' %}" class="flex flex-col items-center text-[#964B00]">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path d="M12 21C12 21 4 13.36 4 8.5a4.5 4.5 0 018.5-2.5A4.5 4.5 0 0120 8.5C20 13.36 12 21 12 21z"/>
+        </svg>
+        <span class="text-xs">Liked</span>
+      </a>
+      <!-- Profile Icon -->
+      <a href="{%url 'profile_view' %}" class="flex flex-col items-center text-[#964B00]">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <circle cx="12" cy="8" r="4"/><path d="M6 20c0-3.314 2.686-6 6-6s6 2.686 6 6"/>
+        </svg>
+        <span class="text-xs">Profile</span>
+      </a>
+    </div>
+  </nav>
+    <script> 
+
+      function toggleHeart(btn, recipeId) {
+  fetch(`/recipe/${recipeId}/like/`, {
+    method: "POST",
+    headers: { "X-CSRFToken": getCookie("csrftoken") },
+  })
+  .then(response => response.json())
+  .then(data => {
+    const icon = btn.querySelector('.heartIcon');
+    if (data.liked) {
+      icon.classList.remove('fa-regular', 'text-gray-400');
+      icon.classList.add('fa-solid', 'text-red-500');
+    } else {
+      icon.classList.remove('fa-solid', 'text-red-500');
+      icon.classList.add('fa-regular', 'text-gray-400');
+    }
+  });
+}
+
+
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+} 
+// Share
+function shareRecipe(recipeId) {
+  const data = { 
+    title: document.title, 
+    text: 'Check out this recipe on AyurAahar', 
+    url: window.location.href 
+  };
+
+  // 1. Save share action in backend
+  fetch(`/recipe/${recipeId}/share/`, {
+    method: "POST",
+    headers: { "X-CSRFToken": getCookie("csrftoken") },
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.status === "success") {
+      console.log("Recipe shared in DB");
+    }
+  });
+
+  // 2. Show native share box if available
+  if (navigator.share) {
+    navigator.share(data).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(data.url)
+      .then(() => alert('Link copied to clipboard'))
+      .catch(() => alert('Copy the link: ' + data.url));
+  }
+}  
+document.getElementById('commentBtn').addEventListener('click', function () {
+  document.getElementById('commentModal').classList.remove('hidden');
+});
+
+function closeCommentModal() {
+  document.getElementById('commentModal').classList.add('hidden');
+} 
+ 
+document.getElementById('downloadBtn').addEventListener('click', function () {
+  const recipeId = {{ recipe.id }};  // Pass recipe ID into JS
+  // Redirect to the backend download URL
+  window.location.href = `/recipe/${recipeId}/download/`;
+});
+
+
+function toggleEditForm(commentId) {
+  const form = document.getElementById(`edit-form-${commentId}`);
+  form.classList.toggle("hidden");
+}
+</script>
+ 
+</body>
+</html>
