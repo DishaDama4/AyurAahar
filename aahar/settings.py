@@ -187,3 +187,10 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
 }
+
+# Allow the userto host the project on render
+ALLOWED_HOSTS = [
+    'ayuraahar.onrender.com',
+    'localhost',
+    '127.0.0.1',
+]
