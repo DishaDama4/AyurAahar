@@ -1,5 +1,5 @@
 # Backend
-/.env
+.env
 aahar/__pycache__/
 /*.pyc
 db.sqlite3
