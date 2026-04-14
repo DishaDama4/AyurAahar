@@ -23,7 +23,7 @@ const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^()\-_+=])[A-Za-z\d@$!%
         return;
        }
  
-    try { const response = await fetch("http://127.0.0.1:8000/api/register/", {
+    try { const response = await fetch("https://ayuraahar.onrender.com//api/register/", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({ username, email, password }),

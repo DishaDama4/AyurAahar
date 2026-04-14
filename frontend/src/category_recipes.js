@@ -20,7 +20,7 @@ const CategoryRecipes = () => {
 
       console.log("❤️ Toggling recipe:", recipeId);
       
-      const response = await fetch(`http://127.0.0.1:8000/recipe/${recipeId}/like/`, {
+      const response = await fetch(`https://ayuraahar.onrender.com//recipe/${recipeId}/like/`, {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${token}`,
@@ -62,7 +62,7 @@ const CategoryRecipes = () => {
         const token = getJwtToken();
         
         const response = await fetch(
-          `http://127.0.0.1:8000/api/categories/${categoryId}/recipes/`, 
+          `https://ayuraahar.onrender.com//api/categories/${categoryId}/recipes/`, 
           {
             headers: {
               'Authorization': `Bearer ${token}`,

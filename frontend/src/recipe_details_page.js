@@ -31,7 +31,7 @@ const RecipeDetailPage = () => {
         }
 
         // ✅ Get current user FIRST
-        const userRes = await fetch('http://127.0.0.1:8000/api/me/', {
+        const userRes = await fetch('https://ayuraahar.onrender.com//api/me/', {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (userRes.ok) {
@@ -41,7 +41,7 @@ const RecipeDetailPage = () => {
         }
 
         // Recipe
-        const recipeRes = await fetch(`http://127.0.0.1:8000/api/recipes/${id}/`, {
+        const recipeRes = await fetch(`https://ayuraahar.onrender.com//api/recipes/${id}/`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ const RecipeDetailPage = () => {
 
         // Comments
         console.log("🔍 Fetching comments for recipe:", id);
-        const commentsRes = await fetch(`http://127.0.0.1:8000/api/comments/${id}/`, {
+        const commentsRes = await fetch(`https://ayuraahar.onrender.com//api/comments/${id}/`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ const RecipeDetailPage = () => {
       setLoading(true);
       const token = getJwtToken();
 
-      const response = await fetch(`http://127.0.0.1:8000/api/comments/${id}/add/`, {
+      const response = await fetch(`https://ayuraahar.onrender.com//api/comments/${id}/add/`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -136,7 +136,7 @@ const RecipeDetailPage = () => {
       setLoading(true);
       const token = getJwtToken();
 
-      const response = await fetch(`http://127.0.0.1:8000/api/comments/${commentId}/edit/`, {
+      const response = await fetch(`https://ayuraahar.onrender.com//api/comments/${commentId}/edit/`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -170,7 +170,7 @@ const RecipeDetailPage = () => {
       setLoading(true);
       const token = getJwtToken();
 
-      const response = await fetch(`http://127.0.0.1:8000/api/comments/${commentId}/delete/`, {
+      const response = await fetch(`https://ayuraahar.onrender.com//api/comments/${commentId}/delete/`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -195,7 +195,7 @@ const RecipeDetailPage = () => {
       const token = getJwtToken();
       if (!token) navigate('/login');
       
-      const res = await fetch(`http://127.0.0.1:8000/recipe/${id}/like/`, {
+      const res = await fetch(`https://ayuraahar.onrender.com//recipe/${id}/like/`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -218,7 +218,7 @@ const RecipeDetailPage = () => {
     }
     
     const token = getJwtToken();
-    fetch('http://127.0.0.1:8000/api/share/', {
+    fetch('https://ayuraahar.onrender.com//api/share/', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -236,7 +236,7 @@ const RecipeDetailPage = () => {
   const downloadRecipe = async (recipeId, recipeName) => {
     try {
       const token = getJwtToken();
-      const response = await fetch(`http://127.0.0.1:8000/api/recipe/${recipeId}/download/`, {
+      const response = await fetch(`https://ayuraahar.onrender.com//api/recipe/${recipeId}/download/`, {
         method: 'GET',
         headers: { 'Authorization': `Bearer ${token}` },
       });

@@ -22,7 +22,7 @@ const LikedPage = () => {
 
       console.log("❤️ Toggling recipe:", recipeId);
       
-      const response = await fetch(`http://127.0.0.1:8000/recipe/${recipeId}/like/`, {
+      const response = await fetch(`https://ayuraahar.onrender.com//recipe/${recipeId}/like/`, {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${token}`,
@@ -68,7 +68,7 @@ const LikedPage = () => {
       }
 
       console.log("🔍 Fetching liked recipes...");
-      const response = await fetch("http://127.0.0.1:8000/api/recipes/liked/", {
+      const response = await fetch("https://ayuraahar.onrender.com//api/recipes/liked/", {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',

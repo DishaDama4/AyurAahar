@@ -33,7 +33,7 @@ const ProfilePage = () => {
           return;
         }
 
-        const response = await fetch(`http://127.0.0.1:8000/api/profile/data/?t=${Date.now()}`, {
+        const response = await fetch(`https://ayuraahar.onrender.com//api/profile/data/?t=${Date.now()}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -115,7 +115,7 @@ const ProfilePage = () => {
 
     try {
       const token = getJwtToken();
-      const response = await fetch("http://127.0.0.1:8000/api/profile/update/", {
+      const response = await fetch("https://ayuraahar.onrender.com//api/profile/update/", {
         method: 'POST',
         body: formData,
         headers: {
