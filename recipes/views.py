@@ -516,8 +516,9 @@ def recipe_list(request):
         "debug": f"Found {recipes.count()} recipes in DB"
     })
 
-@permission_classes([IsAuthenticated]) 
 @api_view(["GET"])
+@permission_classes([IsAuthenticated]) 
+
 def recipe_detail(request, id):
     """Single recipe with YOUR RecipeSerializer"""
     try:
@@ -567,8 +568,8 @@ def category_recipes(request, category_id):
 # USER RECIPES
 # ===============================
 
-@permission_classes([IsAuthenticated]) 
 @api_view(["GET"])
+@permission_classes([IsAuthenticated]) 
 def user_recipes(request):
     """Current user's recipes"""
     recipes = Recipe_details.objects.filter(user=request.user)
@@ -744,6 +745,7 @@ Extra Tips:
     return response
 
 #  To see the downloaded recipes on dounloaded page 
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def downloaded_recipes(request):
@@ -755,8 +757,8 @@ def downloaded_recipes(request):
 # ADD RECIPE - YOUR RecipeSerializer
 # ===============================
 
-@permission_classes([IsAuthenticated]) 
 @api_view(["POST"])
+@permission_classes([IsAuthenticated]) 
 def add_recipe(request):
     """Create recipe using YOUR RecipeSerializer"""
     serializer = RecipeSerializer(data=request.data, context={'request': request})
@@ -818,6 +820,7 @@ def add_recipe_comment(request, recipe_id):
     except Exception as e:
         return Response({'error': str(e)}, status=400)
     
+    
  # ✅ FIXED Edit Comment View - REPLACE yours:
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
@@ -842,6 +845,7 @@ def edit_comment(request, comment_id):
     return Response(serializer.errors, status=400)
 
 # ✅ DELETE comment (user's own comment only)
+
 @api_view(['DELETE'])  # ✅ MUST be DELETE
 @permission_classes([IsAuthenticated])
 def delete_comment(request, comment_id):
@@ -857,8 +861,8 @@ def delete_comment(request, comment_id):
 # SEARCH & RECOMMENDED
 # ===============================
 
-@permission_classes([IsAuthenticated]) 
 @api_view(["GET"])
+@permission_classes([IsAuthenticated]) 
 def search_recipes(request):
     """Search with YOUR RecipeSerializer"""
     query = request.query_params.get('q', '')
@@ -866,8 +870,8 @@ def search_recipes(request):
     serializer = RecipeSerializer(recipes, many=True, context={'request': request})
     return Response(serializer.data)
 
-@permission_classes([IsAuthenticated]) 
 @api_view(["GET"])
+@permission_classes([IsAuthenticated]) 
 def recommended_recipes(request):
     """Recommended with YOUR RecipeSerializer"""
     recipes = Recipe_details.objects.order_by('-id')[:8]
