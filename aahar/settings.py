@@ -121,12 +121,12 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-#  For media folder to deploye on frender 
+#  For media folder to deploye on folder  it will help to add the images on the live link  
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.getenv('dgsjg3wqn'),
     'API_KEY': os.getenv('665228949492499'),
     'API_SECRET': os.getenv('fehIYH4xrio-mWgSfW08zwqICXk'),
-}
+} 
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
