@@ -86,8 +86,11 @@ urlpatterns = [
 
     #Debugging Session cookies
     path('api/debug-session/', views.debug_session , name='debug_session'),
-     path('api/token/refresh/', TokenRefreshView.as_view()),  # JWT refresh
+    path('api/token/refresh/', TokenRefreshView.as_view()),  # JWT refresh
 
+
+    # New url for see the data from live link 
+     path('api/debug/', views.debug_data,name="debug_data"),
 ]
 if settings.DEBUG:
      urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

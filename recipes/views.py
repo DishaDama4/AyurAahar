@@ -950,6 +950,15 @@ def recipe_delete(request, recipe_id):
         return Response({"detail": "Recipe not found or not yours"}, status=404)
 
 
+from django.http import JsonResponse
+from django.contrib.auth.models import User
+
+@api_view(['GET'])
+def debug_data(request):
+    return JsonResponse({
+        'users': list(User.objects.values('id', 'username', 'email')),
+        'count': User.objects.count()
+    })
 
 # Password of the user  Darshana_11 is djd11
 # Password for the user Alice_0 is alice098
