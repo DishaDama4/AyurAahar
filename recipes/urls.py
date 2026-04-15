@@ -97,7 +97,7 @@ urlpatterns = [
     path('api/recipe/<int:recipe_id>/share/', views.share_recipe, name='share_recipe'),
     path('api/recipe/<int:recipe_id>/comment/', views.add_comment, name='add_comment'),
     path('api/recipe/<int:recipe_id>/download/', views.download_recipe, name='download_recipe'),
-    path('api/profile/', views.user_profile, name='user_profile'),
+    # path('api/profile/', views.user_profile, name='user_profile'),
 # for testing cloudinary
     path('test-cloudinary/', views.test_cloudinary_upload, name='test_cloudinary'),
 
