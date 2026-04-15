@@ -16,16 +16,19 @@ class UserSerializer(serializers.ModelSerializer):
             password=validated_data['password']
         )
         return user
+class ProfileSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
     
-    class ProfileSerializer(serializers.ModelSerializer):
-        image_url = serializers.SerializerMethodField()
-        
-        class Meta:
-            model = Profile
-            fields = ['id', 'image', 'image_url']
-        def get_image_url(self, obj):
+    class Meta:
+        model = Profile
+        fields = ['id', 'image', 'image_url']
+    
+    def get_image_url(self, obj):
+        try:
             if obj.image and hasattr(obj.image, 'url'):
-                return obj.image.url  # ✅ Cloudinary returns full URL
+                return obj.image.url  # ✅ Cloudinary URL
+            return None
+        except Exception:
             return None
 
 
