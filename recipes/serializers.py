@@ -215,13 +215,15 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     # ✅ FIXED: Recipe image
     def get_image(self, obj):
-        try:
-            if obj.image:
-                return obj.image.url  # ✅ Cloudinary returns full URL
-            return None
-        except Exception:
-            return None
-
+        if obj.image:
+        # ✅ Force Cloudinary to return the correct URL
+            try:
+                return obj.image.url
+            except Exception:
+            # ✅ Fallback if anything fails
+                return None
+        return None
+    
     # ✅ FIXED: User profile image in recipe
     def get_user_profile_image(self, obj):
         try:
