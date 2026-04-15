@@ -961,6 +961,55 @@ def debug_data(request):
         'count': User.objects.count()
     })
 
+#   for getting recipes & categories on render api 
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+
+# ✅ Debug: See all Categories
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def debug_categories(request):
+    from .models import Category
+    categories = Category.objects.values('id', 'category_name', 'icon')
+    return Response({
+        'total_categories': Category.objects.count(),
+        'categories': list(categories)
+    })
+
+# ✅ Debug: See all Recipes with image URLs
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def debug_recipes(request):
+    from .models import Recipe_details
+    recipes = Recipe_details.objects.all()
+    data = []
+    for recipe in recipes:
+        # Check if image exists and build full URL
+        if recipe.image:
+            image_url = request.build_absolute_uri(recipe.image.url)
+            image_exists = True
+        else:
+            image_url = None
+            image_exists = False
+
+        data.append({
+            'id': recipe.id,
+            'recipe_name': recipe.recipe_name,
+            'image_field_value': str(recipe.image),   # ← raw value in DB
+            'image_url': image_url,                    # ← full URL
+            'image_exists': image_exists,              # ← is image set?
+            'category': str(recipe.category_name),
+            'user': recipe.user.username,
+            'is_public': recipe.is_public,
+            'created_at': str(recipe.created_at),
+        })
+
+    return Response({
+        'total_recipes': Recipe_details.objects.count(),
+        'recipes': data
+    })
+
 # Password of the user  Darshana_11 is djd11
 # Password for the user Alice_0 is alice098
 # Password of the user Ishwar_Dama is ishw@rD02

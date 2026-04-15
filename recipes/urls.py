@@ -90,7 +90,9 @@ urlpatterns = [
 
 
     # New url for see the data from live link 
-     path('api/debug/', views.debug_data,name="debug_data"),
+    path('api/debug/', views.debug_data,name="debug_data"),
+    path('api/debug/categories/', views.debug_categories, name="debug_recipes"),  # ← Categories
+    path('api/debug/recipes/', views.debug_recipes ,name="debug_categories"),         # ← Recipes
 ]
 if settings.DEBUG:
      urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
