@@ -1109,6 +1109,21 @@ def user_profile(request):
 
     except Exception as e:
         return Response({'error': str(e)}, status=HTTP_400_BAD_REQUEST)
+    
+from django.http import JsonResponse
+from cloudinary import uploader
+
+def test_cloudinary_upload(request):
+    try:
+        # Upload a test image
+        result = uploader.upload("https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg")
+        return JsonResponse({
+            'success': True,
+            'url': result['secure_url'],
+            'public_id': result['public_id']
+        })
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)}, status=500)
 # Password of the user  Darshana_11 is djd11
 # Password for the user Alice_0 is alice098
 # Password of the user Ishwar_Dama is ishw@rD02

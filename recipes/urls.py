@@ -98,6 +98,9 @@ urlpatterns = [
     path('api/recipe/<int:recipe_id>/comment/', views.add_comment, name='add_comment'),
     path('api/recipe/<int:recipe_id>/download/', views.download_recipe, name='download_recipe'),
     path('api/profile/', views.user_profile, name='user_profile'),
+# for testing cloudinary
+    path('test-cloudinary/', views.test_cloudinary_upload, name='test_cloudinary'),
+
 ]
 if settings.DEBUG:
      urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

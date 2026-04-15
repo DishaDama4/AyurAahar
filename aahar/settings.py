@@ -223,6 +223,7 @@
 from pathlib import Path
 import os
 import cloudinary
+import cloudinary_storage
 from datetime import timedelta
 
 # ==============================
