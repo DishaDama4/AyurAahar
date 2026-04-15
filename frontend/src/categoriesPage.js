@@ -22,7 +22,7 @@ const CategoriesPage = () => {
         }
 
         console.log("🔍 Fetching categories with JWT...");
-        const response = await fetch("https://ayuraahar.onrender.com//api/categories/", {
+        const response = await fetch("https://ayuraahar.onrender.com/api/categories/", {
           headers: {
             'Authorization': `Bearer ${token}`,        // ✅ JWT
             'Content-Type': 'application/json',

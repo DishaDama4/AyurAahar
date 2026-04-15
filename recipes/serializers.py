@@ -139,5 +139,5 @@ class CommentSerializer(serializers.ModelSerializer):
             
             if profile_image_field:
                 return request.build_absolute_uri(profile_image_field.url)
-        return "https://ayuraahar.onrender.com//static/images/default_user.jpg"
+        return "https://ayuraahar.onrender.com/static/images/default_user.jpg"
 

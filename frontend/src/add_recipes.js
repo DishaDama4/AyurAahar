@@ -25,13 +25,13 @@ const AddRecipePage = () => {
         console.log("🔍 Fetching categories...");
         
         // Try public API first (no token)
-        let response = await fetch("https://ayuraahar.onrender.com//api/categories/");
+        let response = await fetch("https://ayuraahar.onrender.com/api/categories/");
         
         if (!response.ok) {
           console.log("🌐 Public API failed, trying with token...");
           const token = getJwtToken();
           if (token) {
-            response = await fetch("https://ayuraahar.onrender.com//api/categories/", {
+            response = await fetch("https://ayuraahar.onrender.com/api/categories/", {
               headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -153,7 +153,7 @@ const AddRecipePage = () => {
 
   try {
     const token = getJwtToken();
-    const response = await fetch("https://ayuraahar.onrender.com//api/recipes/create/", {
+    const response = await fetch("https://ayuraahar.onrender.com/api/recipes/create/", {
       method: 'POST',
       body: submitData,
       headers: { 'Authorization': `Bearer ${token}` }

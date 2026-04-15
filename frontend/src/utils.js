@@ -18,7 +18,7 @@ export const getCSRFToken = () => getCookie('csrftoken');
 
 // Fetch CSRF token once - returns promise
 export const fetchCSRFToken = () => {
-  return fetch("https://ayuraahar.onrender.com//api/csrf/", {
+  return fetch("https://ayuraahar.onrender.com/api/csrf/", {
     credentials: "include"
   });
 };

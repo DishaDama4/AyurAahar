@@ -20,7 +20,7 @@ const DownloadsPage = () => {
         return;
       }
 
-      const response = await fetch(`https://ayuraahar.onrender.com//recipe/${recipeId}/like/`, {
+      const response = await fetch(`https://ayuraahar.onrender.com/recipe/${recipeId}/like/`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -54,7 +54,7 @@ const DownloadsPage = () => {
         }
 
         // TODO: Replace with your downloads API
-        const response = await fetch(`https://ayuraahar.onrender.com//api/downloads/`, {
+        const response = await fetch(`https://ayuraahar.onrender.com/api/downloads/`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',

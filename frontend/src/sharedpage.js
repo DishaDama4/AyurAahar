@@ -23,7 +23,7 @@ const SharedPage = () => {
       }
 
       // ✅ NEW API - Gets ACTUAL recipe details
-      const response = await fetch(`https://ayuraahar.onrender.com//api/user-shared-recipes/?t=${Date.now()}`, {
+      const response = await fetch(`https://ayuraahar.onrender.com/api/user-shared-recipes/?t=${Date.now()}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ const SharedPage = () => {
         return;
       }
 
-      const response = await fetch(`https://ayuraahar.onrender.com//recipe/${recipeId}/like/`, {
+      const response = await fetch(`https://ayuraahar.onrender.com/recipe/${recipeId}/like/`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

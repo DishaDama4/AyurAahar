@@ -51,7 +51,7 @@ const handleRecipeImageChange = (e) => {
     console.log("🔍 Fetching user recipes...");
     
     // ✅ CORRECT ENDPOINT
-    const response = await fetch("https://ayuraahar.onrender.com//api/my-recipes/", {
+    const response = await fetch("https://ayuraahar.onrender.com/api/my-recipes/", {
       headers: { 
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
@@ -81,7 +81,7 @@ const fetchCategories = async () => {
     setLoading(true);
     const token = getJwtToken();
     
-    const response = await fetch("https://ayuraahar.onrender.com//api/categories/", {
+    const response = await fetch("https://ayuraahar.onrender.com/api/categories/", {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ const handleEditSubmit = async (e) => {
 
   try {
     const token = getJwtToken();
-    const response = await fetch(`https://ayuraahar.onrender.com//api/recipes/${editFormData.id}/update/`, {
+    const response = await fetch(`https://ayuraahar.onrender.com/api/recipes/${editFormData.id}/update/`, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -196,7 +196,7 @@ const handleEditSubmit = async (e) => {
 const handleDeleteSubmit = async () => {
   try {
     const token = getJwtToken();
-    const response = await fetch(`https://ayuraahar.onrender.com//api/recipes/${editFormData.id}/delete/`, {
+    const response = await fetch(`https://ayuraahar.onrender.com/api/recipes/${editFormData.id}/delete/`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`,

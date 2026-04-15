@@ -24,7 +24,7 @@ const LoginPage = () => {
 const handleSubmit = async (e) => {
   e.preventDefault();
   try {
-    const res = await fetch("https://ayuraahar.onrender.com//api/login/", {
+    const res = await fetch("https://ayuraahar.onrender.com/api/login/", {
       method: "POST",
       credentials: "include",
       headers: {
