@@ -1009,7 +1009,106 @@ def debug_recipes(request):
         'total_recipes': Recipe_details.objects.count(),
         'recipes': data
     })
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK
+from .models import Like, Recipe_details
+from .serializers import LikeSerializer
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def toggle_like(request, recipe_id):
+    try:
+        recipe = Recipe_details.objects.get(id=recipe_id)
+        like, created = Like.objects.get_or_create(user=request.user, recipe=recipe)
+        
+        if not created:
+            like.delete()
+            liked = False
+        else:
+            liked = True
+
+        return Response({
+            'liked': liked,
+            'count': recipe.likes.count()
+        }, status=HTTP_200_OK)
+
+    except Recipe_details.DoesNotExist:
+        return Response({'error': 'Recipe not found'}, status=HTTP_400_BAD_REQUEST)
+
+from .models import Shared
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def share_recipe(request, recipe_id):
+    try:
+        recipe = Recipe_details.objects.get(id=recipe_id)
+        Shared.objects.create(user=request.user, recipe=recipe)
+        return Response({'message': 'Recipe shared'}, status=HTTP_200_OK)
+    except Recipe_details.DoesNotExist:
+        return Response({'error': 'Recipe not found'}, status=HTTP_400_BAD_REQUEST)
+    
+from .models import Comment
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def add_comment(request, recipe_id):
+    try:
+        recipe = Recipe_details.objects.get(id=recipe_id)
+        comment_text = request.data.get('comment_txt')
+        if not comment_text:
+            return Response({'error': 'Comment text required'}, status=HTTP_400_BAD_REQUEST)
+
+        comment = Comment.objects.create(
+            user=request.user,
+            recipe=recipe,
+            comment_txt=comment_text
+        )
+
+        return Response({
+            'id': comment.id,
+            'user': comment.user.username,
+            'comment_txt': comment.comment_txt,
+            'created_at': comment.created_at
+        }, status=HTTP_200_OK)
+
+    except Recipe_details.DoesNotExist:
+        return Response({'error': 'Recipe not found'}, status=HTTP_400_BAD_REQUEST)
+    
+from .models import Download
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def download_recipe(request, recipe_id):
+    try:
+        recipe = Recipe_details.objects.get(id=recipe_id)
+        Download.objects.create(user=request.user, recipe=recipe)
+        return Response({'message': 'Recipe downloaded'}, status=HTTP_200_OK)
+    except Recipe_details.DoesNotExist:
+        return Response({'error': 'Recipe not found'}, status=HTTP_400_BAD_REQUEST)
+    
+from .models import Profile
+
+@api_view(['GET', 'PUT'])
+@permission_classes([IsAuthenticated])
+def user_profile(request):
+    try:
+        profile, created = Profile.objects.get_or_create(user=request.user)
+        
+        if request.method == 'GET':
+            serializer = ProfileSerializer(profile)
+            return Response(serializer.data, status=HTTP_200_OK)
+        
+        elif request.method == 'PUT':
+            serializer = ProfileSerializer(profile, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=HTTP_200_OK)
+            return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+
+    except Exception as e:
+        return Response({'error': str(e)}, status=HTTP_400_BAD_REQUEST)
 # Password of the user  Darshana_11 is djd11
 # Password for the user Alice_0 is alice098
 # Password of the user Ishwar_Dama is ishw@rD02

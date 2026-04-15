@@ -31,7 +31,7 @@ const HomePage = () => {
       setLoading(true);
 
       // Fetch recipes
-      const recipeRes = await fetch("https://ayuraahar.onrender.com///api/recipes/", {
+      const recipeRes = await fetch("https://ayuraahar.onrender.com/api/recipes/", {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ const HomePage = () => {
       setIsLikedStates(likes);
 
       // Fetch categories
-      const catRes = await fetch("https://ayuraahar.onrender.com///api/categories/", {
+      const catRes = await fetch("https://ayuraahar.onrender.com/api/categories/", {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ const HomePage = () => {
 
       console.log("❤️ Toggling recipe:", recipeId);
       
-      const response = await fetch(`https://ayuraahar.onrender.com///recipe/${recipeId}/like/`, {
+      const response = await fetch(`https://ayuraahar.onrender.com//recipe/${recipeId}/like/`, {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${token}`,
