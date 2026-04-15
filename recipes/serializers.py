@@ -16,19 +16,17 @@ class UserSerializer(serializers.ModelSerializer):
             password=validated_data['password']
         )
         return user
- 
-class ProfileSerializer(serializers.ModelSerializer):
-    image_url = serializers.SerializerMethodField()
     
-    class Meta:
-        model = Profile
-        fields = ['id', 'image', 'image_url']
-    
-    def get_image_url(self, obj):
-        request = self.context.get('request')
-        if obj.image and hasattr(obj.image, 'url'):
-            return request.build_absolute_uri(obj.image.url)
-        return None
+    class ProfileSerializer(serializers.ModelSerializer):
+        image_url = serializers.SerializerMethodField()
+        
+        class Meta:
+            model = Profile
+            fields = ['id', 'image', 'image_url']
+        def get_image_url(self, obj):
+            if obj.image and hasattr(obj.image, 'url'):
+                return obj.image.url  # ✅ Cloudinary returns full URL
+            return None
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -59,22 +57,19 @@ class RecipeSerializer(serializers.ModelSerializer):
         if user and user.is_authenticated:
             return obj.likes.filter(user=user).exists()
         return False
-
+    
     def get_image(self, obj):
-        request = self.context.get('request')
-        if obj.image and request:
-            return request.build_absolute_uri(obj.image.url)
-        return None
-    
-    # ✅ REPLACE your RecipeSerializer method:
+         if obj.image:
+            return obj.image.url  # ✅ Cloudinary returns full URL
+         return None
+
     def get_user_profile_image(self, obj):
-        request = self.context.get('request')
         user = obj.user
-    
-    # Direct user profile image
+
+         # Direct user profile image
         if hasattr(user, 'profile_image') and getattr(user, 'profile_image'):
-            return request.build_absolute_uri(user.profile_image.url)
-    
+            return user.profile_image.url  # ✅ Cloudinary returns full URL
+
     # Profile model (check common field names)
         if hasattr(user, 'profile') and user.profile:
             profile = user.profile
@@ -82,8 +77,11 @@ class RecipeSerializer(serializers.ModelSerializer):
                       getattr(profile, 'image', None) or 
                       getattr(profile, 'avatar', None))
             if image_field:
-                return request.build_absolute_uri(image_field.url)
-    
+                return image_field.url  # ✅ Cloudinary returns full URL
+
+    # Default image — this is static, so it's fine to use build_absolute_uri
+    # But only for static files, not uploaded ones
+        request = self.context.get('request')
         return request.build_absolute_uri('/static/images/default_user.png')
 
     def validate_category_name(self, value):
