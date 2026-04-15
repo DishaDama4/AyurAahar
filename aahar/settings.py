@@ -360,7 +360,7 @@ cloudinary.config(
 
 # ✅ Use Cloudinary for ALL uploaded media files
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
+CLOUDINARY_URL=os.getenv("CLOUDINARY_URL")
 MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -370,7 +370,7 @@ MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = ' cloudinary_storage.storage.StaticCloudinaryStorage'
 
 # ==============================
 # DEFAULT PRIMARY KEY
