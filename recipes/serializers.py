@@ -31,7 +31,6 @@ class ProfileSerializer(serializers.ModelSerializer):
         except Exception:
             return None
 
-
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
@@ -96,7 +95,6 @@ class RecipeSerializer(serializers.ModelSerializer):
         validated_data['user'] = self.context['request'].user
         return super().create(validated_data)
 
-
 class LikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Like
@@ -108,13 +106,11 @@ class SharedSerializer(serializers.ModelSerializer):
         model = Shared
         fields = ["id", "user", "recipe", "shared_at"]
 
-
 class DownloadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Download
         fields = ["id", "user", "recipe", "downloaded_at"]
  
-
 # ✅ REPLACE your CommentSerializer get_user_image method:
 class CommentSerializer(serializers.ModelSerializer):
     user = serializers.CharField(source='user.username', read_only=True)
