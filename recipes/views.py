@@ -954,6 +954,7 @@ from django.http import JsonResponse
 from django.contrib.auth.models import User
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def debug_data(request):
     return JsonResponse({
         'users': list(User.objects.values('id', 'username', 'email')),
