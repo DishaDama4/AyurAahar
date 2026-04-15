@@ -155,10 +155,10 @@ MEDIA_ROOT=os.path.join(BASE_DIR , 'media')
 
 # For React to Django :-
 # settings.py - ADD THESE
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",
+#     "http://127.0.0.1:3000",
+# ]
 CORS_ALLOW_CREDENTIALS = True
  # CORS_ALLOW_ALL_ORIGINS = True  # ❌ Remove or comment this line
 CORS_ALLOWED_ORIGINS = [
@@ -168,11 +168,11 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 # CSRF for React
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "https://ayuraahar-frontend.onrender.com",  #
-]
+# CSRF_TRUSTED_ORIGINS = [
+#     "http://localhost:3000",
+#     "http://127.0.0.1:3000",
+#     "https://ayuraahar-frontend.onrender.com",  #
+# ]
 
 # Getting the login data to the profile through session
 SESSION_COOKIE_SAMESITE = 'Lax'  # ✅ CRITICAL!
