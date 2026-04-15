@@ -121,7 +121,14 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+#  For media folder to deploye on frender 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('dgsjg3wqn'),
+    'API_KEY': os.getenv('665228949492499'),
+    'API_SECRET': os.getenv('fehIYH4xrio-mWgSfW08zwqICXk'),
+}
 
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
