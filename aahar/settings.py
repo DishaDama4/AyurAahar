@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -162,8 +163,8 @@ MEDIA_ROOT=os.path.join(BASE_DIR , 'media')
 CORS_ALLOW_CREDENTIALS = True
  # CORS_ALLOW_ALL_ORIGINS = True  # ❌ Remove or comment this line
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
+    # "http://localhost:3000",
+    # "http://127.0.0.1:3000",
     "https://ayuraahar-frontend.onrender.com",  # ✅ Add your React frontend URL
 ]
 
