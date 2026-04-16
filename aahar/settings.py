@@ -361,8 +361,7 @@ cloudinary.config(
     api_secret = os.getenv('CLOUDINARY_API_SECRET'),
     secure = True  # ✅ correct spelling
 )
-
- 
+cloudinary.config(secure=True) 
 # ✅ Use Cloudinary for ALL uploaded media files
 DEFAULT_FILE_STORAGE ='cloudinary_storage.storage.MediaCloudinaryStorage'
  
