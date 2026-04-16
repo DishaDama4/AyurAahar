@@ -92,11 +92,7 @@ urlpatterns = [
     # New url for see the data from live link 
     path('api/debug/', views.debug_data,name="debug_data"),
     path('api/debug/categories/', views.debug_categories, name="debug_recipes"),  # ← Categories
-    path('api/debug/recipes/', views.debug_recipes ,name="debug_categories"),         # ← Recipes
-    path('api/recipe/<int:recipe_id>/like/', views.toggle_like, name='toggle_like'),
-    path('api/recipe/<int:recipe_id>/share/', views.share_recipe, name='share_recipe'),
-    path('api/recipe/<int:recipe_id>/comment/', views.add_comment, name='add_comment'),
-    path('api/recipe/<int:recipe_id>/download/', views.download_recipe, name='download_recipe'),
+    path('api/debug/recipes/', views.debug_recipes ,name="debug_categories"),         # ← Recipes 
     # path('api/profile/', views.user_profile, name='user_profile'),
 # for testing cloudinary
     path('test-cloudinary/', views.test_cloudinary_upload, name='test_cloudinary'),

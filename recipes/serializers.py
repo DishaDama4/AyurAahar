@@ -196,7 +196,7 @@ class RecipeSerializer(serializers.ModelSerializer):
     liked = serializers.SerializerMethodField()
     user_username = serializers.CharField(source='user.username', read_only=True)
     user_profile_image = serializers.SerializerMethodField()
-    image = serializers.SerializerMethodField()
+    image = serializers.ImageField()
 
     class Meta:
         model = Recipe_details

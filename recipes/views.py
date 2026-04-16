@@ -622,26 +622,7 @@ def recipe_create(request):
 
 # ===============================
 # ACTIONS - Like/Share/Download
-# ===============================
-
-# @permission_classes([IsAuthenticated]) 
-# @api_view(["POST"])
-# def like_recipe(request):
-#     """Toggle like using YOUR LikeSerializer"""
-#     recipe_id = request.data.get('recipe_id')
-#     recipe = Recipe_details.objects.get(id=recipe_id)
-    
-#     like, created = Like.objects.get_or_create(user=request.user, recipe=recipe)
-#     if not created:
-#         like.delete()
-    
-#     serializer = LikeSerializer(like) if created else None
-#     return Response({
-#         'success': True, 
-#         'liked': created,
-#         'like': serializer.data if created else None
-#     })
-# ✅ PRIVATE - Login required  
+# ============================= 
  
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
