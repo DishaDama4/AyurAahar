@@ -352,21 +352,17 @@ CLOUDINARY_URL=os.getenv("CLOUDINARY_URL")
 if not CLOUDINARY_URL:
     raise ValueError("Cloudinary_url is not set in env variables")
 
-# CLOUDINARY_STORAGE = {
-#     'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
-#     'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
-#     'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
-# }
 
 # ✅ Force initialize Cloudinary
 cloudinary.config(
     cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME'),
     api_key=os.getenv('CLOUDINARY_API_KEY'),
-    api_secret=os.getenv('CLOUDINARY_API_SECRET')
+    api_secret=os.getenv('CLOUDINARY_API_SECRET'),
+    secre=True
 )
 
 # ✅ Use Cloudinary for ALL uploaded media files
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+DEFAULT_FILE_STORAGE ='cloudinary_storage.storage.MediaCloudinaryStorage'
  
 MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -376,10 +372,12 @@ MEDIA_URL = '/media/'
 # ==============================
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_STORAGE ='cloudinary_storage.storage.StaticCloudinaryStorage'
+STATIC_ROOT = BASE_DIR / "staticfiles" 
+# ✅ No space before cloudinary_storage!
+STATICFILES_STORAGE ='whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# ==============================
+# ✅ Keep these
+MEDIA_URL = '/media/'
 # DEFAULT PRIMARY KEY
 # ==============================
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
