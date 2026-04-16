@@ -1009,3 +1009,4 @@ def test_cloudinary_upload(request):
 # Password of the user  Darshana_11 is djd11
 # Password for the user Alice_0 is alice098
 # Password of the user Ishwar_Dama is ishw@rD02
+# Password for user Sakshi_KH is Hibare_SK25
