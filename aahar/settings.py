@@ -372,7 +372,10 @@ MEDIA_URL = '/media/'
 # STATIC FILES
 # ==============================
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'build'),
+] 
 STATIC_ROOT = BASE_DIR / "staticfiles" 
 # ✅ No space before cloudinary_storage!
 STATICFILES_STORAGE ='whitenoise.storage.CompressedManifestStaticFilesStorage'

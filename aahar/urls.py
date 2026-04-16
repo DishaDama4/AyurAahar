@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin 
 from django.urls import path , include
+from django.views.generic import TemplateView 
 # from recipes import views
 # Change the header text
 admin.site.site_header = "Aahar Administration"
@@ -30,6 +31,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('recipes.urls'))
 ]
+
+
+# Add fallback for React frontend (SPA)
+urlpatterns += [re_path(r'^.*$', TemplateView.as_view(template_name='index.html'))]
 
 # super user :- aaharUser
 # Password :- finalproject
