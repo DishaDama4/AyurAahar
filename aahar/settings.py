@@ -225,6 +225,9 @@ import os
 import cloudinary
 import cloudinary_storage
 from datetime import timedelta
+import cloudinary.uploader
+import cloudinary.api
+
 
 # ==============================
 # BASE DIRECTORY
