@@ -351,6 +351,7 @@ USE_TZ = True
 CLOUDINARY_URL=os.getenv("CLOUDINARY_URL")
 if not CLOUDINARY_URL:
     raise ValueError("Cloudinary_url is not set in env variables")
+
 # CLOUDINARY_STORAGE = {
 #     'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
 #     'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
@@ -376,7 +377,7 @@ MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_STORAGE = ' cloudinary_storage.storage.StaticCloudinaryStorage'
+STATICFILES_STORAGE ='cloudinary_storage.storage.StaticCloudinaryStorage'
 
 # ==============================
 # DEFAULT PRIMARY KEY
