@@ -2,7 +2,7 @@ from django.db import models
 # Create the models here 
 from django.contrib.auth.models import User
 from django.conf import settings
- 
+from cloudinary.models import CloudinaryField
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -25,7 +25,7 @@ class Recipe_details(models.Model):
     ingredients = models.TextField()
     methods = models.TextField()
     extra_tips = models.TextField(blank=True, null=True)  #optionl can be null 
-    image = models.ImageField(upload_to="recipe_img/")   # <-- new folder for recipes
+    image = CloudinaryField('recipe_img', blank=True , null=True)   # <-- new folder for recipes
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="recipes")
     created_at = models.DateTimeField(auto_now_add=True)
     is_public = models.BooleanField(default=True) # new field
