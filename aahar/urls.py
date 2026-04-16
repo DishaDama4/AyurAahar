@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin 
 from django.urls import path , include
 from django.views.generic import TemplateView 
+from rest_framework_simplejwt.views import TokenObtainPairView   
 # from recipes import views
 # Change the header text
 admin.site.site_header = "Aahar Administration"
@@ -29,8 +30,10 @@ admin.site.index_title = "Welcome to Aahar Admin"
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('recipes.urls'))
+    path('',include('recipes.urls')),
+    path('api/login/', TokenObtainPairView.as_view(), name='login'),
 ]
+
 
 
 # Add fallback for React frontend (SPA)
