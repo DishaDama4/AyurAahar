@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import BottomNavbar from './BottomNav';
 
 const DownloadsPage = () => {
   const [recipes, setRecipes] = useState([]);
@@ -157,7 +158,7 @@ const DownloadsPage = () => {
 
                   {/* See Recipe Button */}
                   <Link
-                    to={`/recipe/${recipe.id}`}
+                    to={`/recipe_details/${recipe.id}`}
                     className="mt-2 px-3 py-2 text-xs rounded bg-[#FF9933] text-white font-semibold hover:bg-[#964B00] transition"
                   >
                     See Recipe
@@ -174,42 +175,7 @@ const DownloadsPage = () => {
 
       </div>
 
-      {/* Bottom Navigation Bar (sticky) */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-[#FF9933] z-50">
-        <div className="max-w-md mx-auto flex justify-between items-center py-2 px-6">
-          {/* Home Icon */}
-          <Link to="/home" className="flex flex-col items-center text-[#964B00]">
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path d="M3 12L12 3l9 9M4 10v10h16V10" />
-            </svg>
-            <span className="text-xs">Home</span>
-          </Link>
-
-          {/* Categories Icon */}
-          <Link to="/categories" className="flex flex-col items-center text-[#964B00]">
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <rect x="4" y="4" width="7" height="7" /><rect x="13" y="4" width="7" height="7" /><rect x="4" y="13" width="7" height="7" /><rect x="13" y="13" width="7" height="7" />
-            </svg>
-            <span className="text-xs">Categories</span>
-          </Link>
-
-          {/* Liked Icon */}
-          <Link to="/liked" className="flex flex-col items-center text-[#964B00]">
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path d="M12 21C12 21 4 13.36 4 8.5a4.5 4.5 0 018.5-2.5A4.5 4.5 0 0120 8.5C20 13.36 12 21 12 21z" />
-            </svg>
-            <span className="text-xs">Liked</span>
-          </Link>
-
-          {/* Profile Icon */}
-          <Link to="/profile" className="flex flex-col items-center text-[#964B00]">
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <circle cx="12" cy="8" r="4" /><path d="M6 20c0-3.314 2.686-6 6-6s6 2.686 6 6" />
-            </svg>
-            <span className="text-xs">Profile</span>
-          </Link>
-        </div>
-      </nav>
+       <BottomNavbar/>
     </div>
   );
 };

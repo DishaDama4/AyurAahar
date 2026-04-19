@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import BottomNavbar from './BottomNav';
 
 const SharedPage = () => {
   const [recipes, setRecipes] = useState([]);
@@ -176,7 +177,7 @@ const SharedPage = () => {
           
           {/* Button - EXACT SAME */}
           <Link 
-            to={`/recipe/${recipe.id}`}
+            to={`/recipe_details/${recipe.id}`}
             className="px-3 py-2 text-xs bg-[#FF9933] text-white rounded font-semibold hover:bg-[#964B00]"
           >
             See Recipe
@@ -207,12 +208,9 @@ const SharedPage = () => {
     )}
   </div>
 </div>
-
- 
-
-      </div>
-
-      {/* Bottom Navigation */}
+   </div>
+   <BottomNavbar/>    
+      {/* Bottom Navigation
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-[#FF9933] z-50">
         <div className="max-w-md mx-auto flex justify-between items-center py-2 px-6">
           <Link to="/home" className="flex flex-col items-center text-[#964B00]">
@@ -240,7 +238,7 @@ const SharedPage = () => {
             <span className="text-xs">Profile</span>
           </Link>
         </div>
-      </nav>
+      </nav> */}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import BottomNavbar from "./BottomNav";
 const CategoriesPage = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -94,7 +94,8 @@ const CategoriesPage = () => {
         </div>
       </section>
 
-      {/* YOUR ORIGINAL Bottom Nav - UNCHANGED */}
+<BottomNavbar/>
+      {/* Bottom Nav
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-[#FF9933] z-50">
         <div className="max-w-md mx-auto flex justify-between items-center py-2 px-6">
           <Link to="/home" className="flex flex-col items-center text-[#964B00]">
@@ -122,7 +123,7 @@ const CategoriesPage = () => {
             <span className="text-xs">Profile</span>
           </Link>
         </div>
-      </nav>
+      </nav> */}
     </div>
   );
 };

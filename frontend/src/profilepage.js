@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-
+import BottomNavbar from "./BottomNav";
 const ProfilePage = () => {
   const [profileData, setProfileData] = useState(null);
   const [stats, setStats] = useState({});
@@ -297,35 +297,7 @@ const ProfilePage = () => {
         </div>
       </div>
 
-      {/* Bottom Navigation - UNCHANGED */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-[#FF9933] shadow-lg z-50">
-        <div className="max-w-md mx-auto flex justify-between items-center py-2 px-6">
-          <Link to="/home" className="flex flex-col items-center text-[#964B00] hover:text-[#FF9933] transition">
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12L12 3l9 9M4 10v10h16V10" />
-            </svg>
-            <span className="text-xs">Home</span>
-          </Link>
-          <Link to="/categories" className="flex flex-col items-center text-[#964B00] hover:text-[#FF9933] transition">
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <rect x="4" y="4" width="7" height="7" /><rect x="13" y="4" width="7" height="7" /><rect x="4" y="13" width="7" height="7" /><rect x="13" y="13" width="7" height="7" />
-            </svg>
-            <span className="text-xs">Categories</span>
-          </Link>
-          <Link to="/liked" className="flex flex-col items-center text-[#964B00] hover:text-[#FF9933] transition">
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path d="M12 21C12 21 4 13.36 4 8.5a4.5 4.5 0 018.5-2.5A4.5 4.5 0 0120 8.5C20 13.36 12 21 12 21z" />
-            </svg>
-            <span className="text-xs">Liked</span>
-          </Link>
-          <Link to="/profile" className="flex flex-col items-center text-[#FF9933] font-semibold">
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-            </svg>
-            <span className="text-xs">Profile</span>
-          </Link>
-        </div>
-      </nav>
+       <BottomNavbar/>
     </div>
   );
 };

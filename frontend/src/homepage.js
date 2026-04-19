@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-
+import BottomNavbar from "./BottomNav";
 const HomePage = () => {
   const [recipes, setRecipes] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -95,7 +95,7 @@ const HomePage = () => {
 
       console.log("❤️ Toggling recipe:", recipeId);
       
-      const response = await fetch(`https://ayuraahar.onrender.com//recipe/${recipeId}/like/`, {
+      const response = await fetch(`https://ayuraahar.onrender.com/recipe/${recipeId}/like/`, {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${token}`,
@@ -266,7 +266,8 @@ const HomePage = () => {
           </section>
         </div>
 
-        {/* Bottom Navigation */}
+   <BottomNavbar/>
+        {/* Bottom Navigation
         <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-[#FF9933] z-50">
           <div className="max-w-md mx-auto flex justify-between items-center py-2 px-6">
             <Link to="/home" className="flex flex-col items-center text-[#964B00]">
@@ -294,7 +295,7 @@ const HomePage = () => {
               <span className="text-xs">Profile</span>
             </Link>
           </div>
-        </nav>
+        </nav> */}
       </div>
     </>
   );
